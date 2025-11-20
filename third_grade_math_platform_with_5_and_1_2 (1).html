@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>منصة رياضيات الصف الثالث الابتدائي – جميع تطبيقات الرياضيات</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Tahoma", system-ui, sans-serif;
+    }
+
+    body {
+      background: #f4f6fb;
+      color: #222;
+      min-height: 100vh;
+    }
+
+    /* شاشة الترحيب */
+    .welcome-screen {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: radial-gradient(circle at top, #e0f2ff 0, #f4f6fb 40%, #ffffff 100%);
+      padding: 24px 16px;
+    }
+
+    .welcome-logo {
+      width: 220px;
+      max-width: 70vw;
+      margin-bottom: 18px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    }
+
+    .welcome-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #005b96;
+      margin-bottom: 8px;
+    }
+
+    .welcome-subtitle {
+      font-size: 15px;
+      margin-bottom: 16px;
+      color: #333;
+      line-height: 1.7;
+    }
+
+    .welcome-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .welcome-badge {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0, 91, 150, 0.06);
+      color: #005b96;
+    }
+
+    .welcome-button {
+      border: none;
+      padding: 10px 26px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(135deg, #005b96, #00a8cc);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: transform 0.1s, box-shadow 0.1s, opacity 0.2s;
+    }
+
+    .welcome-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+      opacity: 0.95;
+    }
+
+    .welcome-note {
+      font-size: 12px;
+      color: #666;
+      margin-top: 10px;
+    }
+
+    /* التطبيق الرئيسي */
+    .app-root {
+      display: none;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #005b96, #00a8cc);
+      color: #fff;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    header .title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    header h1 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .badge {
+      background: rgba(255,255,255,0.15);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      margin-top: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .header-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.35);
+    }
+
+    .header-logo img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    .header-small-text {
+      font-size: 11px;
+      text-align: left;
+    }
+
+    .app-container {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+    }
+
+    nav {
+      width: 300px;
+      background: #ffffff;
+      border-left: 1px solid #e1e4ee;
+      padding: 16px 14px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: -2px 0 8px rgba(0,0,0,0.03);
+    }
+
+    .nav-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #005b96;
+      margin-bottom: 6px;
+    }
+
+    .nav-group-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #666;
+      margin-top: 8px;
+      margin-bottom: 2px;
+      opacity: 0.9;
+    }
+
+    .nav-btn {
+      width: 100%;
+      border: none;
+      text-align: right;
+      padding: 9px 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f5f7ff;
+      color: #222;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.05s, box-shadow 0.1s;
+    }
+
+    .nav-btn span.icon {
+      font-size: 16px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .nav-btn.active {
+      background: #005b96;
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .nav-btn:hover {
+      background: #e0e7ff;
+      transform: translateY(-1px);
+    }
+
+    .nav-btn.active:hover {
+      background: #005083;
+    }
+
+    main {
+      flex: 1;
+      padding: 18px 18px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 18px 18px 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: #005b96;
+    }
+
+    .card h3 {
+      font-size: 15px;
+      margin-bottom: 6px;
+      color: #333;
+    }
+
+    .card p {
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .tag {
+      font-size: 11px;
+      background: #f0f4ff;
+      border-radius: 999px;
+      padding: 3px 8px;
+      color: #005b96;
+    }
+
+    .tips-list {
+      list-style: "🔹 ";
+      padding-right: 18px;
+      font-size: 13px;
+      line-height: 1.8;
+      margin-top: 4px;
+    }
+
+    .student-banner {
+      background: linear-gradient(135deg, #fff6d9, #ffe9f3);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border: 1px dashed rgba(0,0,0,0.08);
+    }
+
+    .student-banner h3 {
+      font-size: 15px;
+      color: #c05800;
+      margin-bottom: 2px;
+    }
+
+    .student-banner p {
+      font-size: 13px;
+      margin: 0;
+    }
+
+    iframe {
+      width: 100%;
+      height: 420px;
+      border-radius: 14px;
+      border: 1px solid #d9deee;
+      background: #f9f9ff;
+    }
+
+    .iframe-hint {
+      font-size: 12px;
+      color: #666;
+      margin-top: 6px;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: #ffffff;
+      border-top: 1px solid #e1e4ee;
+      padding: 6px 14px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #444;
+      z-index: 10;
+    }
+
+    @media (max-width: 900px) {
+      .app-root {
+        min-height: 100vh;
+      }
+      .app-container {
+        flex-direction: column;
+      }
+      nav {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        border-left: none;
+        border-top: 1px solid #e1e4ee;
+      }
+      .nav-group-label {
+        display: none;
+      }
+      .nav-title {
+        display: none;
+      }
+      .nav-btn {
+        min-width: 210px;
+        white-space: nowrap;
+      }
+      main {
+        padding: 14px 12px 80px;
+      }
+      iframe {
+        height: 380px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- واجهة ترحيبية -->
+  <section class="welcome-screen" id="welcomeScreen">
+    <img src="https://i.top4top.io/p_35930g1tw1.png" alt="شعار ملتقى التعليم التفاعلي"
+         class="welcome-logo"
+         onerror="this.style.display='none'; this.alt='فشل في تحميل الصورة';">
+    <div class="welcome-title">منصة رياضيات الصف الثالث الابتدائي</div>
+    <div class="welcome-subtitle">
+      ملتقى التعليم التفاعلي (تفاعل) – جميع تطبيقات الرياضيات التعليمية في مكان واحد  
+      لتدريب الطلاب والطالبات على مهارات الرياضيات بطريقة ممتعة وتفاعلية 🌟
+    </div>
+    <div class="welcome-badge-row">
+      <span class="welcome-badge">🧮 جداول الضرب</span>
+      <span class="welcome-badge">➕➖ الجمع والطرح</span>
+      <span class="welcome-badge">🎯 التقريب</span>
+      <span class="welcome-badge">🔢 الأنماط والقيمة المنزلية</span>
+      <span class="welcome-badge">⏱️ الزمن والمقارنة</span>
+    </div>
+    <button class="welcome-button" id="enterButton">دخول المنصة</button>
+    <div class="welcome-note">بالضغط على زر دخول المنصة ستنتقل مباشرةً إلى جميع التطبيقات التفاعلية</div>
+  </section>
+
+  <!-- التطبيق الرئيسي -->
+  <div class="app-root" id="appRoot" style="display:none;">
+    <header>
+      <div class="title-group">
+        <h1>منصة رياضيات الصف الثالث الابتدائي</h1>
+        <p>جميع تطبيقات الرياضيات التفاعلية في مكان واحد: جداول الضرب، الشبكات، الجمع، الطرح، التقريب، الأنماط، الزمن، القيمة المنزلية، المقارنة ✨</p>
+        <div class="badge">
+          <span>📚</span> أنشطة تفاعلية لطلاب وطالبات الصف الثالث الابتدائي
+        </div>
+      </div>
+      <div class="header-logo-wrap">
+        <div class="header-logo">
+          <img src="https://i.top4top.io/p_35930g1tw1.png" alt="شعار ملتقى التعليم التفاعلي" />
+        </div>
+        <div class="header-small-text">
+          ملتقى التعليم التفاعلي (تفاعل)<br/>
+          رياضيات – الصف الثالث الابتدائي
+        </div>
+      </div>
+    </header>
+
+    <div class="app-container">
+      <!-- الشريط الجانبي -->
+      <nav>
+        <div class="nav-title">جميع الأنشطة التفاعلية</div>
+
+        <button class="nav-btn active" data-target="home">
+          <span class="icon">🏠</span>
+          <span>الواجهة الرئيسية للمنصة</span>
+        </button>
+
+        <!-- شبكات وتمهيد الضرب -->
+        <div class="nav-group-label">شبكات وتمهيد الضرب</div>
+        <button class="nav-btn" data-url="https://123456789fh.github.io/Networks-in-the-multiplication-process/">
+          <span class="icon">🕸️</span>
+          <span>شبكات في عملية الضرب</span>
+        </button>
+
+        <!-- جداول الضرب والتدريب -->
+        <div class="nav-group-label">جداول الضرب والتدريب</div>
+        <button class="nav-btn" data-url="https://123456789fh.github.io/1-2/">
+          <span class="icon">1–2</span>
+          <span>مغامرة جدول ١ و٢</span>
+        </button>
+        <button class="nav-btn" data-url="https://123456789fh.github.io/3---/">
+          <span class="icon">3×</span>
+          <span>جدول ضرب ٣ – عرض وتدريب</span>
+        </button>
+        <button class="nav-btn" data-url="https://123456789fh.github.io/5--/">
+          <span class="icon">5×</span>
+          <span>مغامرة جدول ٥ التفاعلية</span>
+        </button>
+        <button class="nav-btn" data-url="https://123456789fh.github.io/0-10/">
+          <span class="icon">🧮</span>
+          <span>تدريب جداول الضرب ٠–١٠</span>
+        </button>
+        <button class="nav-btn" data-url="https://123456789fh.github.io/Multiplication-table-/">
+          <span class="icon">🎯</span>
+          <span>اختبار جدول الضرب ٠–١٠ + ورقة عمل</span>
+        </button>
+        <button class="nav-btn" data-url="https://123456789fh.github.io/Multiplication-table-/">
+          <span class="icon">🌟</span>
+          <span>تدريب خاص: الضرب في ٠ و ١</span>
+        </button>
+        <button class="nav-btn" data-url="https://123456789fh.github.io/Multiplication-process/">
+          <span class="icon">📊</span>
+          <span>تطبيق جدول ١–٣ (٤ أنماط + شهادة إنجاز)</span>
+        </button>
+
+        <!-- مهارات الجمع والطرح -->
+        <div class="nav-group-label">مهارات الجمع والطرح</div>
+        <button class="nav-btn" data-url="https://123456789fh.github.io/Collection/">
+          <span class="icon">➕</span>
+          <span>مراجعة فصل الجمع – الصف الثالث ف١</span>
+        </button>
+        <button class="nav-btn" data-url="https://123456789fh.github.io/Subtraction/">
+          <span class="icon">➖</span>
+          <span>تعلم الطرح مع الأصفار – أسئلة تفاعلية</span>
+        </button>
+
+        <!-- التقريب والقيمة المنزلية -->
+        <div class="nav-group-label">التقريب والقيمة المنزلية</div>
+        <button class="nav-btn" data-url="https://123456789fh.github.io/Approximation/">
+          <span class="icon">🎯</span>
+          <span>التقريب (عشرة – مئة – ألف) + خط الأعداد</span>
+        </button>
+        <button class="nav-btn" data-url="https://123456789fh.github.io/Place-value/">
+          <span class="icon">🏫</span>
+          <span>القيمة المنزلية – أسئلة تفاعلية</span>
+        </button>
+
+        <!-- الأنماط العددية -->
+        <div class="nav-group-label">الأنماط العددية</div>
+        <button class="nav-btn" data-url="https://123456789fh.github.io/Review-/">
+          <span class="icon">🔢</span>
+          <span>مراجعة الأنماط العددية + أسئلة متنوعة</span>
+        </button>
+        <button class="nav-btn" data-url="https://ensanbinadam.github.io/12345/">
+          <span class="icon">🏆</span>
+          <span>درس الأنماط العددية مع شهادة اجتياز</span>
+        </button>
+        <button class="nav-btn" data-url="https://123456789fh.github.io/The-pattern1/">
+          <span class="icon">🔁</span>
+          <span>تدريبات على الأنماط للصف الثالث (مع طباعة)</span>
+        </button>
+
+        <!-- الزمن المنقضي -->
+        <div class="nav-group-label">الزمن المنقضي</div>
+        <button class="nav-btn" data-url="https://123456789fh.github.io/Hour1/">
+          <span class="icon">⏱️</span>
+          <span>حاسبة الزمن المنقضي من ساعتين تناظريتين</span>
+        </button>
+
+        <!-- المقارنة بين الأعداد -->
+        <div class="nav-group-label">المقارنة بين الأعداد</div>
+        <button class="nav-btn" data-url="https://123456789fh.github.io/Comparison-/">
+          <span class="icon">⚖️</span>
+          <span>تطبيق المقارنة بين الأعداد (تفاعلي)</span>
+        </button>
+      </nav>
+
+      <!-- منطقة المحتوى -->
+      <main>
+        <!-- بطاقة ترحيب رئيسية داخل المنصة -->
+        <section id="home-section" class="card">
+          <h2>مرحبًا بكم في منصة رياضيات الصف الثالث 💫</h2>
+          <p>
+            هذه المنصة تجمع جميع تطبيقات الرياضيات التفاعلية المخصصة لطلاب وطالبات الصف الثالث الابتدائي،
+            وتشمل: جداول الضرب، الشبكات، الجمع، الطرح مع الأصفار، التقريب، الأنماط العددية،
+            القيمة المنزلية، الزمن المنقضي، والمقارنة بين الأعداد.
+          </p>
+
+          <div class="tag-row">
+            <span class="tag">🌟 أنشطة جاهزة للحصة الصفية</span>
+            <span class="tag">🌟 مناسبة للمراجعة والواجبات</span>
+            <span class="tag">🌟 كثير من الأنشطة تدعم الطباعة</span>
+          </div>
+
+          <div style="margin-top:14px;">
+            <h3>طريقة استخدام المنصة 👇</h3>
+            <ul class="tips-list">
+              <li>من القائمة في يمين الشاشة، حدِّد النشاط أو الدرس الذي ترغب في العمل عليه.</li>
+              <li>سيُفتح التطبيق داخل الإطار التفاعلي في الأسفل.</li>
+              <li>اقرأ التعليمات في كل تطبيق، ثم ابدأ بحل الأسئلة خطوةً خطوة.</li>
+              <li>استفد من التغذية الراجعة الفورية في التطبيقات التي تعرض التصحيح مباشرة.</li>
+              <li>يمكن للمعلم أو المعلمة استخدام هذه المنصة كمراكز تعلم، أو أنشطة ختامية، أو واجبات منزلية تفاعلية.</li>
+            </ul>
+          </div>
+
+          <div class="student-banner">
+            <h3>رسالة إلى أبطال الرياضيات 💛</h3>
+            <p>
+              كل تطبيق هنا صُمِّم ليساعدك على فهم الرياضيات بطريقة ممتعة وسهلة.  
+              يمكنك مراجعة مهارة واحدة يوميًا باستخدام هذه المنصة،  
+              ومع الوقت ستجد أن الأرقام صارت صديقة قريبة لك 🏆🌈.
+            </p>
+          </div>
+        </section>
+
+        <!-- بطاقة الإطار التفاعلي -->
+        <section class="card">
+          <h3>منطقة عرض الأنشطة التفاعلية</h3>
+          <p>
+            عند اختيار أي نشاط من القائمة سيتم فتحه هنا.  
+            إذا لم يظهر المحتوى، يمكنك فتحه في تبويب جديد من المتصفح.
+          </p>
+          <iframe id="activityFrame" title="منطقة الأنشطة التفاعلية"></iframe>
+          <div class="iframe-hint">
+            💡 تلميح: قد تحتاج التطبيقات لثوانٍ كي تُحمَّل بالكامل.
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer>
+      <div>
+        برمجة وتصميم المنصة: <strong>أ/ فاطمة هزازي</strong>
+      </div>
+      <div>
+        💻 رياضيات – الصف الثالث الابتدائي – جميع تطبيقات الرياضيات
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // زر دخول المنصة
+    const enterButton = document.getElementById("enterButton");
+    const welcomeScreen = document.getElementById("welcomeScreen");
+    const appRoot = document.getElementById("appRoot");
+
+    enterButton.addEventListener("click", () => {
+      welcomeScreen.style.display = "none";
+      appRoot.style.display = "flex";
+    });
+
+    // التنقل داخل المنصة
+    const navButtons = document.querySelectorAll(".nav-btn");
+    const frame = document.getElementById("activityFrame");
+    const homeSection = document.getElementById("home-section");
+
+    function setActiveButton(clickedBtn) {
+      navButtons.forEach(btn => btn.classList.remove("active"));
+      clickedBtn.classList.add("active");
+    }
+
+    navButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        setActiveButton(btn);
+
+        const url = btn.getAttribute("data-url");
+        const target = btn.getAttribute("data-target");
+
+        if (target === "home" || (!url && target === "home")) {
+          homeSection.style.display = "block";
+          frame.src = "";
+        } else if (url) {
+          homeSection.style.display = "block";
+          frame.src = url;
+        }
+      });
+    });
+
+    // لا تُعرض المنصة مباشرة عند تحميل الصفحة، بل شاشة الترحيب أولًا
+    window.addEventListener("load", () => {
+      welcomeScreen.style.display = "flex";
+      appRoot.style.display = "none";
+    });
+  </script>
+</body>
+</html>
